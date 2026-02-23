@@ -1,0 +1,36 @@
+// Program to find minimum number of platforms 
+
+test case -
+
+{900, 940, 950, 1100, 1500, 1800}; 
+{910, 1200, 1120, 1130, 1900, 2000};
+
+
+def find_platform(arr, dep, n):
+    # Sort arrival and departure times
+    arr.sort()
+    dep.sort()
+
+    # At least one platform is needed for the first train
+    plat_needed = 1
+    result = 1
+
+    i = 1  # Pointer for arrivals
+    j = 0  # Pointer for departures
+
+    # Process all events in sorted order
+    while i < n and j < n:
+        # If next train arrives before or at the same time as current train departs
+        if arr[i] <= dep[j]:
+            plat_needed += 1
+            i += 1
+
+            # Update maximum platforms needed
+            if plat_needed > result:
+                result = plat_needed
+        else:
+            # A train has departed, so free one platform
+            plat_needed -= 1
+            j += 1
+
+    return result
